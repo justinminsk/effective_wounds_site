@@ -31,7 +31,7 @@ app.layout = html.Div(
     Input(component_id=save_picker, component_property="value"),
     Input(component_id=ward_picker, component_property="value"),
     Input(component_id=save_reroll_toggle, component_property="value"),
-    Input(component_id=save_reroll_toggle, component_property="value")
+    Input(component_id=ward_reroll_toggle, component_property="value")
 )
 def update_table(selected_wound, selected_save, selected_ward, reroll_saves, reroll_wards):
     rend = [0, -1, -2, -3, -4, -5]
@@ -48,12 +48,13 @@ def update_table(selected_wound, selected_save, selected_ward, reroll_saves, rer
         else:
             save_with_rend_value = 1
         if int(selected_ward) > 0:
+            ward = 7 - int(selected_ward)
             if reroll_wards == "reroll failed wards":
-                ward_value = 1 / (1 - ((int(selected_ward) / 6) + ((6 - int(selected_ward)) / 6 * (int(selected_ward) / 6))))
+                ward_value = 1 / (1 - ((ward / 6) + ((6 - ward) / 6 * (ward / 6))))
             elif reroll_wards == "reroll 1s wards":
-                ward_value = 1 / (1 - ((int(selected_ward) / 6) + ((1 / 6 * (int(selected_ward) / 6)))))
+                ward_value = 1 / (1 - ((ward / 6) + ((1 / 6 * (ward / 6)))))
             else:
-                ward_value = 1 / (1 - ((7 - int(selected_ward)) / 6))
+                ward_value = 1 / (1 - (ward / 6))
         else:
             ward_value = 1
         effective_wounds_value = int(selected_wound) * save_with_rend_value * ward_value
