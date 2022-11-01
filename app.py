@@ -7,17 +7,18 @@ server = app.server
 
 wound_picker = dcc.Input(value=10, type="number")
 save_picker = dcc.Input(value=4, type="number")
-save_reroll_toggle = dcc.Dropdown(["don't reroll save", "reroll failed save", "reroll 1s save"], value="don't reroll save")
+save_reroll_toggle = dcc.Dropdown(["don't reroll saves", "reroll failed saves", "reroll 1s saves"], value="don't reroll saves")
 ward_picker = dcc.Input(value=0, type="number")
-ward_reroll_toggle = dcc.Dropdown(["don't reroll ward", "reroll failed ward", "reroll 1s ward"], value="don't reroll ward")
+ward_reroll_toggle = dcc.Dropdown(["don't reroll wards", "reroll failed wards", "reroll 1s wards"], value="don't reroll wards")
 
 
 app.layout = html.Div(
     children=[
         html.H1(children="AoS Effective Wound Calculator"),
-        html.Div([html.P("Wounds"), wound_picker]),
-        html.Div([html.P("Base Save"), save_picker, html.P("Rerolling Saves"), save_reroll_toggle]),
-        html.Div([html.P("Ward"), ward_picker, ward_reroll_toggle]),
+        html.Div([html.H5("Wounds"), wound_picker]),
+        html.Div([html.H5("Base Save"), save_picker, save_reroll_toggle]),
+        html.Div([html.H5("Ward"), ward_picker, ward_reroll_toggle]),
+        html.H3("Effective Wound Table"),
         html.Table(id="ew_table"),
     ]
 )
@@ -38,18 +39,18 @@ def update_table(selected_wound, selected_save, selected_ward, reroll_saves, rer
     for i in range(len(rend)):
         save_value = 7 - int(selected_save) + rend[i]
         if save_value > 0:
-            if reroll_saves == "reroll failed save":
+            if reroll_saves == "reroll failed saves":
                 save_with_rend_value = 1 / (1 - ((save_value / 6) + ((6 - save_value) / 6 * (save_value / 6))))
-            elif reroll_saves == "reroll 1s save":
+            elif reroll_saves == "reroll 1s saves":
                 save_with_rend_value = 1 / (1 - ((save_value / 6) + ((1 / 6 * (save_value / 6)))))
             else:
                 save_with_rend_value = 1 / (1 - (save_value / 6))
         else:
             save_with_rend_value = 1
         if int(selected_ward) > 0:
-            if reroll_saves == "reroll failed ward":
+            if reroll_wards == "reroll failed wards":
                 ward_value = 1 / (1 - ((int(selected_ward) / 6) + ((6 - int(selected_ward)) / 6 * (int(selected_ward) / 6))))
-            elif reroll_saves == "reroll 1s ward":
+            elif reroll_wards == "reroll 1s wards":
                 ward_value = 1 / (1 - ((int(selected_ward) / 6) + ((1 / 6 * (int(selected_ward) / 6)))))
             else:
                 ward_value = 1 / (1 - ((7 - int(selected_ward)) / 6))
