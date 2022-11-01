@@ -3,6 +3,7 @@ import pandas as pd
 
 # Create the Dash app
 app = Dash(__name__)
+server = app.server
 
 wound_picker = dcc.Input(value=10)
 save_picker = dcc.Input(value=4)
@@ -53,7 +54,6 @@ def update_table(selected_wound, selected_save, selected_ward):
             columns=[{"id": x, "name": x} for x in table.columns],
         )
     
-server = app.server
 # Run local server
 if __name__ == "__main__":
     app.run_server(debug=True)
