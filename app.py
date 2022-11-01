@@ -5,17 +5,17 @@ import pandas as pd
 app = Dash(__name__)
 server = app.server
 
-wound_picker = dcc.Input(value=10)
-save_picker = dcc.Input(value=4)
-ward_picker = dcc.Input(value=0)
+wound_picker = dcc.Input(value=10, type="number")
+save_picker = dcc.Input(value=4, type="number")
+ward_picker = dcc.Input(value=0, type="number")
 
 
 app.layout = html.Div(
     children=[
         html.H1(children="AoS Effective Wound Calculator"),
-        wound_picker,
-        save_picker,
-        ward_picker,
+        html.Div([html.P("Wounds"), wound_picker]),
+        html.Div([html.P("Base Save"), save_picker]),
+        html.Div([html.P("Ward"), ward_picker]),
         html.Table(id="ew_table"),
     ]
 )
