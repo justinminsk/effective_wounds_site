@@ -30,7 +30,7 @@ app.layout = html.Div(
 )
 def update_table(selected_wound, selected_save, selected_ward):
     rend = [0, -1, -2, -3, -4, -5]
-    table = {}
+    table = {"rend": [], "effective wounds": []}
     for i in range(len(rend)):
         save_value = 7 - int(selected_save) + rend[i]
         if save_value > 0:
@@ -42,10 +42,8 @@ def update_table(selected_wound, selected_save, selected_ward):
         else:
             ward_value = 1
         effective_wounds_value = int(selected_wound) * save_with_rend_value * ward_value
-        table[str(i)] = {
-            "rend": rend[i],
-            "effective wounds": effective_wounds_value,
-        }
+        table["rend"].append(rend[i])
+        table["effective wounds"].append(effective_wounds_value)
     table = pd.DataFrame(table)
     return html.Div(
         dash_table.DataTable(
