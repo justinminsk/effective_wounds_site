@@ -49,11 +49,19 @@ def update_table(selected_wound, selected_save, selected_ward):
     table = pd.DataFrame(table)
     return html.Div(
         dash_table.DataTable(
-            style_data={"whiteSpace": "normal", "height": "auto", 'minWidth': '180px', 'width': '180px', 'maxWidth': '180px'},
+            style_data={
+                "whiteSpace": "normal",
+                "height": "auto",
+                "minWidth": "180px",
+                "width": "180px",
+                "maxWidth": "180px",
+            },
             data=table.to_dict("rows"),
             columns=[{"id": x, "name": x} for x in table.columns],
         )
-    
+    )
+
+
 # Run local server
 if __name__ == "__main__":
     app.run_server(debug=True)
