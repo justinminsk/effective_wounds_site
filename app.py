@@ -2,7 +2,7 @@ from dash import Dash, html, dcc, Input, dependencies, dash_table
 import pandas as pd
 
 # Create the Dash app
-app = Dash()
+app = Dash(__name__)
 
 wound_picker = dcc.Input(value=10)
 save_picker = dcc.Input(value=4)
@@ -52,8 +52,7 @@ def update_table(selected_wound, selected_save, selected_ward):
             data=table.to_dict("rows"),
             columns=[{"id": x, "name": x} for x in table.columns],
         )
-    )
-
+    
 server = app.server
 # Run local server
 if __name__ == "__main__":
